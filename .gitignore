@@ -25,8 +25,5 @@ yarn-error.log*
 .agave/
 test-ledger/
 
-# GitHub Pages deploy directory
-.ghpages-deploy
-
-# Codegenerated TypeDoc API
-docs/
+# ignore JetBrains IDE
+.idea

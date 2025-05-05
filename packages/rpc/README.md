@@ -5,13 +5,13 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/rpc/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/rpc/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/rpc/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/rpc?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/rpc?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/rpc
 
 # @solana/rpc
 
-This package contains utilities for creating objects that you can use to communicate with a Solana JSON RPC server. It can be used standalone, but it is also exported as part of the Solana JavaScript SDK [`@solana/web3.js@next`](https://github.com/anza-xyz/solana-web3.js/tree/main/packages/library).
+This package contains utilities for creating objects that you can use to communicate with a Solana JSON RPC server. It can be used standalone, but it is also exported as part of Kit [`@solana/kit`](https://github.com/anza-xyz/kit/tree/main/packages/kit).
 
 Unless you plan to create a custom RPC interface, you can use the [`createSolanaRpc(clusterUrl)`](#createsolanarpcclusterurl-config) function to obtain a default implementation of the [Solana JSON RPC API](https://solana.com/docs/rpc/http).
 
@@ -43,18 +43,18 @@ transport satisfies RpcTransportTestnet; // OK
 
 These types refine the base `Rpc` type. Each describes a RPC that is specific in some way to a particular Solana cluster and a corpus of RPC methods.
 
-This is useful in cases where you need to make assertions about the suitability of a RPC for a given purpose. For example, you might like to make it a type error to combine certain types with RPC belonging to certain clusters, at compile time.
+This is useful in cases where you need to make assertions about the suitability of a RPC for a given purpose. For example, you might like to make it a type error to combine certain types with RPCs belonging to certain clusters, at compile time.
 
 ```ts
 async function getSpecialAccountInfo(
     address: Address<'ReAL1111111111111111111111111111'>,
-    rpc: RpcMainnet,
+    rpc: RpcMainnet<unknown>,
 ): Promise<SpecialAccountInfo>;
 async function getSpecialAccountInfo(
     address: Address<'TeST1111111111111111111111111111'>,
-    rpc: RpcDevnet | RpcTestnet,
+    rpc: RpcDevnet<unknown> | RpcTestnet<unknown>,
 ): Promise<SpecialAccountInfo>;
-async function getSpecialAccountInfo(address: Address, rpc: Rpc): Promise<SpecialAccountInfo> {
+async function getSpecialAccountInfo(address: Address, rpc: Rpc<unknown>): Promise<SpecialAccountInfo> {
     /* ... */
 }
 const rpc = createSolanaRpc(devnet('https://api.devnet.solana.com'));
@@ -63,7 +63,7 @@ await getSpecialAccountInfo(address('ReAL1111111111111111111111111111'), rpc); /
 
 ### `RpcFromTransport<TRpcMethods, TRpcTransport extends RpcTransport>`
 
-Given a `RpcTransport`, this utility type will resolve to as specific a `Rpc` as possible.
+Given a `RpcTransport` and a set of RPC methods denoted by `TRpcMethods` this utility type will resolve to a `Rpc` that supports those methods on as specific a cluster as possible.
 
 ```ts
 function createCustomRpc<TRpcTransport extends RpcTransport>(
@@ -78,6 +78,20 @@ rpc satisfies RpcMainnet<MyCustomRpcMethods>; // OK
 ```
 
 ### SolanaRpcApiFromTransport<TTransport extends RpcTransport>
+
+Given a `RpcTransport` this utility type will resolve to a union of all the methods of the Solana RPC API supported by the transport's cluster.
+
+```ts
+function createSolanaRpcFromTransport<TTransport extends RpcTransport>(
+    transport: TTransport,
+): RpcFromTransport<SolanaRpcApiFromTransport<TTransport>, TTransport> {
+    /* ... */
+}
+const transport = createDefaultRpcTransport({ url: mainnet('http://rpc.company') });
+transport satisfies RpcTransportMainnet; // OK
+const rpc = createSolanaRpcFromTransport(transport);
+rpc satisfies RpcMainnet<SolanaRpcApiMainnet>; // OK
+```
 
 ## Constants
 
@@ -100,8 +114,9 @@ Creates a `RpcTransport` with some default behaviours.
 
 The default behaviours include:
 
-- An automatically-set `Solana-Client` request header, containing the version of `@solana/web3.js`
+- An automatically-set `Solana-Client` request header, containing the version of `@solana/kit`
 - Logic that coalesces multiple calls in the same runloop, for the same methods with the same arguments, into a single network request.
+- [node-only] An automatically-set `Accept-Encoding` request header asking the server to compress responses
 
 #### Arguments
 

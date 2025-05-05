@@ -1,6 +1,6 @@
 /**
  * To add a new error, follow the instructions at
- * https://github.com/anza-xyz/solana-web3.js/tree/main/packages/errors/#adding-a-new-error
+ * https://github.com/anza-xyz/kit/tree/main/packages/errors/#adding-a-new-error
  *
  * @privateRemarks
  * WARNING:
@@ -125,6 +125,7 @@ import {
     SOLANA_ERROR__KEYS__INVALID_SIGNATURE_BYTE_LENGTH,
     SOLANA_ERROR__KEYS__SIGNATURE_STRING_LENGTH_OUT_OF_RANGE,
     SOLANA_ERROR__MALFORMED_BIGINT_STRING,
+    SOLANA_ERROR__MALFORMED_JSON_RPC_ERROR,
     SOLANA_ERROR__MALFORMED_NUMBER_STRING,
     SOLANA_ERROR__NONCE_ACCOUNT_NOT_FOUND,
     SOLANA_ERROR__RPC__API_PLAN_MISSING_FOR_RPC_METHOD,
@@ -484,6 +485,10 @@ export type SolanaErrorContext = DefaultUnspecifiedErrorContextToUndefined<
         };
         [SOLANA_ERROR__MALFORMED_BIGINT_STRING]: {
             value: string;
+        };
+        [SOLANA_ERROR__MALFORMED_JSON_RPC_ERROR]: {
+            error: unknown;
+            message: string;
         };
         [SOLANA_ERROR__MALFORMED_NUMBER_STRING]: {
             value: string;

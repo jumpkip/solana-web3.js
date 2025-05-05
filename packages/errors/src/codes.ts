@@ -1,6 +1,6 @@
 /**
  * To add a new error, follow the instructions at
- * https://github.com/anza-xyz/solana-web3.js/tree/main/packages/errors/#adding-a-new-error
+ * https://github.com/anza-xyz/kit/tree/main/packages/errors/#adding-a-new-error
  *
  * @module
  * @privateRemarks
@@ -34,6 +34,7 @@ export const SOLANA_ERROR__LAMPORTS_OUT_OF_RANGE = 6;
 export const SOLANA_ERROR__MALFORMED_BIGINT_STRING = 7;
 export const SOLANA_ERROR__MALFORMED_NUMBER_STRING = 8;
 export const SOLANA_ERROR__TIMESTAMP_OUT_OF_RANGE = 9;
+export const SOLANA_ERROR__MALFORMED_JSON_RPC_ERROR = 10;
 
 // JSON-RPC-related errors.
 // Reserve error codes in the range [-32768, -32000]
@@ -453,6 +454,7 @@ export type SolanaErrorCode =
     | typeof SOLANA_ERROR__KEYS__SIGNATURE_STRING_LENGTH_OUT_OF_RANGE
     | typeof SOLANA_ERROR__LAMPORTS_OUT_OF_RANGE
     | typeof SOLANA_ERROR__MALFORMED_BIGINT_STRING
+    | typeof SOLANA_ERROR__MALFORMED_JSON_RPC_ERROR
     | typeof SOLANA_ERROR__MALFORMED_NUMBER_STRING
     | typeof SOLANA_ERROR__NONCE_ACCOUNT_NOT_FOUND
     | typeof SOLANA_ERROR__RPC__API_PLAN_MISSING_FOR_RPC_METHOD

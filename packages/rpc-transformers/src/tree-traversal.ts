@@ -10,7 +10,7 @@ export type TraversalState = Readonly<{
     keyPath: KeyPath;
 }>;
 
-export function getTreeWalker(visitors: NodeVisitor[]) {
+function getTreeWalker(visitors: NodeVisitor[]) {
     return function traverse<TState extends TraversalState>(node: unknown, state: TState): unknown {
         if (Array.isArray(node)) {
             return node.map((element, ii) => {
@@ -39,6 +39,25 @@ export function getTreeWalker(visitors: NodeVisitor[]) {
     };
 }
 
+/**
+ * Creates a transformer that traverses the request parameters and executes the provided visitors at
+ * each node. A custom initial state can be provided but must at least provide `{ keyPath: [] }`.
+ *
+ * @example
+ * ```ts
+ * import { getTreeWalkerRequestTransformer } from '@solana/rpc-transformers';
+ *
+ * const requestTransformer = getTreeWalkerRequestTransformer(
+ *     [
+ *         // Replaces foo.bar with "baz".
+ *         (node, state) => (state.keyPath === ['foo', 'bar'] ? 'baz' : node),
+ *         // Increments all numbers by 1.
+ *         node => (typeof node === number ? node + 1 : node),
+ *     ],
+ *     { keyPath: [] },
+ * );
+ * ```
+ */
 export function getTreeWalkerRequestTransformer<TState extends TraversalState>(
     visitors: NodeVisitor[],
     initialState: TState,

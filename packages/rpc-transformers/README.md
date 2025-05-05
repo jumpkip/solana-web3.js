@@ -5,11 +5,13 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/rpc-transformers/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/rpc-transformers/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/rpc-transformers/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/rpc-transformers?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/rpc-transformers?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/rpc-transformers
 
 # @solana/rpc-transformers
+
+This package contains helpers for transforming Solana JSON RPC and RPC Subscriptions requests, responses, and notifications in various ways appropriate for use in a JavaScript application.
 
 ## Request Transformers
 
@@ -28,14 +30,14 @@ const requestTransformer = getDefaultRequestTransformerForSolanaRpc({
 });
 ```
 
-### `getDefaultCommitmentTransformer(config)`
+### `getDefaultCommitmentRequestTransformer(config)`
 
 Creates a transformer that adds the provided default commitment to the configuration object of the request when applicable.
 
 ```ts
-import { getDefaultCommitmentTransformer, OPTIONS_OBJECT_POSITION_BY_METHOD } from '@solana/rpc-transformers';
+import { getDefaultCommitmentRequestTransformer, OPTIONS_OBJECT_POSITION_BY_METHOD } from '@solana/rpc-transformers';
 
-const requestTransformer = getDefaultCommitmentTransformer({
+const requestTransformer = getDefaultCommitmentRequestTransformer({
     defaultCommitment: 'confirmed',
     optionsObjectPositionByMethod: OPTIONS_OBJECT_POSITION_BY_METHOD,
 });

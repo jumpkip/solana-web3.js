@@ -5,19 +5,19 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/rpc-subscriptions-spec/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/rpc-subscriptions-spec/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/rpc-subscriptions-spec/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/rpc-subscriptions-spec?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/rpc-subscriptions-spec?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/rpc-subscriptions-spec
 
 # @solana/rpc-subscriptions-spec
 
-This package contains types that describe the implementation of the JSON RPC Subscriptions API, as well as methods to create one. It can be used standalone, but it is also exported as part of the Solana JavaScript SDK [`@solana/web3.js@next`](https://github.com/anza-xyz/solana-web3.js/tree/main/packages/library).
+This package contains types that describe the implementation of the JSON RPC Subscriptions API, as well as methods to create one. It can be used standalone, but it is also exported as part of Kit [`@solana/kit`](https://github.com/anza-xyz/kit/tree/main/packages/kit).
 
 This API is designed to be used as follows:
 
 ```ts
 const rpcSubscriptions =
-    // Step 1 - Create an `RpcSubscriptions` instance. This may be stateful.
+    // Step 1 - Create a `RpcSubscriptions` instance. This may be stateful.
     createSolanaRpcSubscriptions(mainnet('wss://api.mainnet-beta.solana.com'));
 const response = await rpcSubscriptions
     // Step 2 - Call supported methods on it to produce `PendingRpcSubscriptionsRequest` objects.
@@ -40,7 +40,7 @@ try {
 
 ### `RpcSubscriptionsChannel<TOutboundMessage, TInboundMessage>`
 
-A channel is a `DataPublisher` that you can subscribe to events of type `RpcSubscriptionChannelEvents<TInboundMessage>`. Additionally, you can use it to send messages of type `TOutboundMessage` back to the remote end by calling the `send(message)` method.
+A channel is a `DataPublisher` on which you can subscribe to events of type `RpcSubscriptionChannelEvents<TInboundMessage>`. Additionally, you can use this object to send messages of type `TOutboundMessage` back to the remote end by calling its `send(message)` method.
 
 ### `RpcSubscriptionsChannelCreator<TOutboundMessage, TInboundMessage>`
 

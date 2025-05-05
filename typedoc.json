@@ -1,23 +1,25 @@
 {
     "$schema": "https://typedoc.org/schema.json",
-    "entryPoints": ["packages/**"],
-    "entryPointStrategy": "packages",
-    "exclude": [
-        "packages/build-scripts",
-        "packages/crypto-impl",
-        "packages/event-target-impl",
-        "packages/fetch-impl",
-        "packages/rpc-graphql",
-        "packages/test-config",
-        "packages/test-matchers",
-        "packages/text-encoding-impl",
-        "packages/tsconfig",
-        "packages/ws-impl"
+    "out": "docs/content/api",
+    "plugin": [
+        "typedoc-plugin-mdn-links",
+        "typedoc-plugin-markdown",
+        "typedoc-plugin-frontmatter",
+        "./typedoc.plugin.mjs"
     ],
-    "name": "Solana JavaScript SDK",
-    "navigation": {
-        "includeFolders": false
-    },
-    "out": "docs/",
-    "plugin": ["typedoc-plugin-missing-exports"]
+    "disableSources": true,
+    "readme": "none",
+    "hidePageHeader": true,
+    "hideBreadcrumbs": true,
+    "hideGroupHeadings": true,
+    "hidePageTitle": true,
+    "indexFormat": "table",
+    "parametersFormat": "table",
+    "classPropertiesFormat": "table",
+    "enumMembersFormat": "table",
+    "typeDeclarationFormat": "table",
+    "propertyMembersFormat": "table",
+    "interfacePropertiesFormat": "table",
+    "fileExtension": ".mdx",
+    "entryFileName": "index"
 }

@@ -5,13 +5,13 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/instructions/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/instructions/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/instructions/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/instructions?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/instructions?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/instructions
 
 # @solana/instructions
 
-This package contains types for creating transaction instructions. It can be used standalone, but it is also exported as part of the Solana JavaScript SDK [`@solana/web3.js@next`](https://github.com/anza-xyz/solana-web3.js/tree/main/packages/library).
+This package contains types for creating transaction instructions. It can be used standalone, but it is also exported as part of Kit [`@solana/kit`](https://github.com/anza-xyz/kit/tree/main/packages/kit).
 
 ## Types
 
@@ -75,7 +75,7 @@ type StakeProgramInstruction = IInstruction<'StakeConfig111111111111111111111111
 
 ### `IInstructionWithAccounts<TAccounts>`
 
-Use this type to specify an instruction that contains certain accounts.
+Use this type to specify an instruction that loads certain accounts.
 
 ```ts
 type InstructionWithTwoAccounts = IInstructionWithAccounts<
@@ -88,7 +88,7 @@ type InstructionWithTwoAccounts = IInstructionWithAccounts<
 
 ### `IInstructionWithData<TData>`
 
-Use this type to specify an instruction whose data conforms to a certain type. This is most useful when you have a branded `Uint8Array` that represents a particular instruction.
+Use this type to specify an instruction whose data conforms to a certain type. This is most useful when you have a branded `Uint8Array` that represents a particular instruction's data.
 
 For example, here is how the `AdvanceNonce` instruction is typed.
 
@@ -134,7 +134,7 @@ Returns an `AccountRole` representing the non-signer variant of the supplied rol
 
 ### `downgradeRoleToReadonly(role: AccountRole)`
 
-Returns an `AccountRole` representing the non-writable variant of the supplied role.
+Returns an `AccountRole` representing the read-only variant of the supplied role.
 
 ### `upgradeRoleToSigner(role: AccountRole)`
 

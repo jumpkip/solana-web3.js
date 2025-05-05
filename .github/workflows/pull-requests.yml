@@ -3,6 +3,9 @@ name: Pull requests
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 env:
   # Among other things, opts out of Turborepo telemetry
   # See https://consoledonottrack.com/
@@ -48,19 +51,6 @@ jobs:
       - name: Build & Test
         run: pnpm build # Don't add --concurrency here; it's already baked in
 
-      - name: Build GitHub Pages
-        run: pnpm turbo run compile:typedefs compile:ghpages --concurrency=${TURBO_CONCURRENCY:-1}
-
       - name: Stop Test Validator
         if: always() && steps.start-test-validator.outcome == 'success'
         run: kill ${{ steps.start-test-validator.outputs.pid }}
-
-      - name: Upload Library Bundle
-        if: matrix.node == 'current'
-        uses: actions/upload-artifact@v4
-        with:
-          include-hidden-files: true
-          name: library-dist
-          path: |
-            ./packages/library/dist/
-            ./packages/library/package.json

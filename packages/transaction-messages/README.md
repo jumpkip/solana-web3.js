@@ -5,13 +5,13 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/transactions/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/transactions/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/transactions/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/transactions?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/transactions?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/transactions
 
 # @solana/transaction-messages
 
-This package contains types and functions for creating transaction messages. It can be used standalone, but it is also exported as part of the Solana JavaScript SDK [`@solana/web3.js@next`](https://github.com/anza-xyz/solana-web3.js/tree/main/packages/library).
+This package contains types and functions for creating transaction messages. It can be used standalone, but it is also exported as part of Kit [`@solana/kit`](https://github.com/anza-xyz/kit/tree/main/packages/kit).
 
 Transaction messages are built one step at a time using the transform functions offered by this package. To make it more ergonomic to apply consecutive transforms to your transaction messages, consider using a pipelining helper like the one in `@solana/functional`.
 
@@ -24,11 +24,11 @@ import {
     setTransactionMessageLifetimeUsingBlockhash,
 } from '@solana/transaction-messages';
 
-const transferTransaction = pipe(
+const transferTransactionMessage = pipe(
     createTransactionMessage({ version: 0 }),
-    tx => setTransactionMessageFeePayer(myAddress, tx),
-    tx => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, tx),
-    tx => appendTransactionMessageInstruction(createTransferInstruction(myAddress, toAddress, amountInLamports), tx),
+    m => setTransactionMessageFeePayer(myAddress, m),
+    m => setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, m),
+    m => appendTransactionMessageInstruction(getTransferSolInstruction({ source, destination, amount }), m),
 );
 ```
 
@@ -49,7 +49,7 @@ Given a `TransactionVersion` this method will return an empty transaction having
 ```ts
 import { createTransactionMessage } from '@solana/transaction-messages';
 
-const tx = createTransactionMessage({ version: 0 });
+const message = createTransactionMessage({ version: 0 });
 ```
 
 ## Setting the fee payer
@@ -111,7 +111,7 @@ Given a blockhash and the last block height at which that blockhash is considere
 import { setTransactionMessageLifetimeUsingBlockhash } from '@solana/transaction-messages';
 
 const { value: latestBlockhash } = await rpc.getLatestBlockhash().send();
-const txWithBlockhashLifetime = setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, tx);
+const txMessageWithBlockhashLifetime = setTransactionMessageLifetimeUsingBlockhash(latestBlockhash, txMessage);
 ```
 
 #### `setTransactionMessageLifetimeUsingDurableNonce()`
@@ -164,7 +164,7 @@ function handleSubmit() {
         // Typescript will upcast `blockhash` to `Blockhash`.
         assertIsBlockhash(blockhash);
         // At this point, `blockhash` is a `Blockhash` that can be used with the RPC.
-        const blockhashIsValid = await rpc.isBlockhashValid(blockhash).send();
+        const { value: blockhashIsValid } = await rpc.isBlockhashValid(blockhash).send();
     } catch (e) {
         // `blockhash` turned out not to be a base58-encoded blockhash
     }

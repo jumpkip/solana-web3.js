@@ -1,5 +1,5 @@
 import { Address } from '@solana/addresses';
-import { Commitment, Slot } from '@solana/rpc-types';
+import { Commitment, GetProgramAccountsDatasizeFilter, GetProgramAccountsMemcmpFilter, Slot } from '@solana/rpc-types';
 import type { GraphQLResolveInfo } from 'graphql';
 
 import { RpcGraphQLContext } from '../context';
@@ -11,9 +11,22 @@ export function resolveProgramAccounts(fieldName?: string) {
     return async (
         parent: { [x: string]: Address },
         args: {
+            /**
+             * Fetch the details of the accounts as of the highest slot that has reached this level
+             * of commitment.
+             *
+             * @defaultValue Whichever default is applied by the underlying {@link RpcApi} in use.
+             * For example, when using an API created by a `createSolanaRpc*()` helper, the default
+             * commitment is `"confirmed"` unless configured otherwise. Unmitigated by an API layer
+             * on the client, the default commitment applied by the server is `"finalized"`.
+             */
             commitment?: Commitment;
-            dataSizeFilters?: { dataSize: bigint }[];
-            memcmpFilters?: { bytes: string; encoding: 'base58' | 'base64'; offset: bigint }[];
+            dataSizeFilters?: GetProgramAccountsDatasizeFilter[];
+            memcmpFilters?: GetProgramAccountsMemcmpFilter['memcmp'][];
+            /**
+             * Prevents accessing stale data by enforcing that the RPC node has processed
+             * transactions up to this slot
+             */
             minContextSlot?: Slot;
             programAddress: Address;
         },
@@ -21,20 +34,7 @@ export function resolveProgramAccounts(fieldName?: string) {
         info: GraphQLResolveInfo,
     ): Promise<AccountResult[] | null> => {
         const programAddress = fieldName ? parent[fieldName] : args.programAddress;
-        let filters:
-            | (
-                  | {
-                        dataSize: bigint;
-                    }
-                  | {
-                        memcmp: {
-                            bytes: string;
-                            encoding: 'base58' | 'base64';
-                            offset: bigint;
-                        };
-                    }
-              )[]
-            | undefined = [];
+        let filters: (GetProgramAccountsDatasizeFilter | GetProgramAccountsMemcmpFilter)[] | undefined = [];
         if (args.memcmpFilters) {
             filters.concat(
                 args.memcmpFilters.map(memcmpFilter => ({

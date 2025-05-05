@@ -19,6 +19,17 @@
             ],
             "outputs": ["dist/**"]
         },
+        "compile:docs": {
+            "dependsOn": ["^compile:typedefs"],
+            "inputs": [
+                "$TURBO_DEFAULT$",
+                "tsconfig.*",
+                "$TURBO_ROOT$/typedoc.json",
+                "$TURBO_ROOT$/typedoc.plugin.mjs",
+                "src/**"
+            ],
+            "outputs": [".docs/**"]
+        },
         "compile:js": {
             "dependsOn": ["^compile:js"],
             "inputs": ["$TURBO_DEFAULT$", "tsconfig.*", "src/**", "../build-scripts/*.ts"],
@@ -30,7 +41,6 @@
             "outputs": ["dist/**/*.d.ts"]
         },
         "publish-packages": {
-            "cache": false,
             "dependsOn": [
                 "compile:js",
                 "compile:typedefs",
@@ -92,10 +102,6 @@
             "env": ["REACT_EXAMPLE_APP_BASE_PATH", "REACT_EXAMPLE_APP_ENABLE_MAINNET"],
             "inputs": ["$TURBO_DEFAULT$", "index.html", "tsconfig.*", "vite.config.ts", "public/**", "src/**"],
             "outputs": ["dist/**"]
-        },
-        "//#compile:ghpages": {
-            "dependsOn": ["^compile:typedefs", "@solana/example-react-app#compile:js"],
-            "outputs": ["docs/**", "examples/react-app/dist"]
         }
     },
     "ui": "stream"

@@ -21,7 +21,7 @@ executing queries using a type system you define for your data.
 # Quick Start
 
 The RPC-GraphQL client requires an RPC client, as defined by the package
-`@solana/rpc-spec`. Such a client is available in `@solana/web3.js:2.0` or
+`@solana/rpc-spec`. Such a client is available in `@solana/kit:2.0` or
 can be created manually with a custom implementation.
 
 ```ts
@@ -906,12 +906,12 @@ data: {
             {
                 commission: 0.05,
                 lamports: 58578n,
-                rewardType: 'staking',
+                rewardType: 'Staking',
             },
             {
                 commission: 0.05,
                 lamports: 58578n,
-                rewardType: 'staking',
+                rewardType: 'Staking',
             }
         ],
         transactions: [

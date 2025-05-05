@@ -1,6 +1,6 @@
 {
     "name": "@solana/fast-stable-stringify",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Deterministic stringification for when performance and bundle size matters",
     "exports": {
         "edge-light": {
@@ -61,24 +61,24 @@
         "test:unit:node": "TERM_OVERRIDE=\"${TURBO_HASH:+dumb}\" TERM=${TERM_OVERRIDE:-$TERM} jest -c ../../node_modules/@solana/test-config/jest-unit.config.node.ts --rootDir . --silent"
     },
     "devDependencies": {
-        "@types/json-stable-stringify": "^1.1.0",
-        "json-stable-stringify": "^1.1.1"
+        "@types/json-stable-stringify": "^1.2.0",
+        "json-stable-stringify": "^1.2.1"
     },
     "author": "Solana Labs Maintainers <maintainers@solanalabs.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/anza-xyz/solana-web3.js"
+        "url": "https://github.com/anza-xyz/kit"
     },
     "bugs": {
-        "url": "https://github.com/anza-xyz/solana-web3.js/issues"
+        "url": "https://github.com/anza-xyz/kit/issues"
     },
     "browserslist": [
         "supports bigint and not dead",
         "maintained node versions"
     ],
     "peerDependencies": {
-        "typescript": ">=5"
+        "typescript": ">=5.3.3"
     },
     "engines": {
         "node": ">=20.18.0"

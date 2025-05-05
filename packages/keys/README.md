@@ -5,23 +5,23 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/keys/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/keys/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/keys/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/keys?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/keys?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/keys
 
 # @solana/keys
 
-This package contains utilities for validating, generating, and manipulating addresses and key material. It can be used standalone, but it is also exported as part of the Solana JavaScript SDK [`@solana/web3.js@next`](https://github.com/anza-xyz/solana-web3.js/tree/main/packages/library).
+This package contains utilities for validating, generating, and manipulating addresses and key material. It can be used standalone, but it is also exported as part of Kit [`@solana/kit`](https://github.com/anza-xyz/kit/tree/main/packages/kit).
 
 ## Types
 
 ### `Signature`
 
-This type represents a 64-byte Ed25519 signature of some data with a private key, as a base58-encoded string.
+This type represents a 64-byte Ed25519 signature as a base58-encoded string.
 
 ### `SignatureBytes`
 
-This type represents a 64-byte Ed25519 signature of some data with a private key.
+This type represents a 64-byte Ed25519 signature.
 
 Whenever you need to verify that a particular signature is, in fact, the one that would have been produced by signing some known bytes using the private key associated with some known public key, use the `verifySignature()` function in this package.
 
@@ -64,7 +64,7 @@ const { privateKey, publicKey } = await generateKeyPair();
 
 ### `createKeyPairFromBytes()`
 
-Given a 64-bytes `Uint8Array` secret key, creates an Ed25519 public/private key pair for use with other methods in this package that accept `CryptoKey` objects.
+Given a 64-byte `Uint8Array` secret key, creates an Ed25519 public/private key pair for use with other methods in this package that accept `CryptoKey` objects.
 
 ```ts
 import fs from 'fs';
@@ -102,7 +102,7 @@ const derivedKeypair = await createKeyPairFromPrivateKeyBytes(seed);
 
 ### `createPrivateKeyFromBytes()`
 
-Given a private key represented as a 32-bytes `Uint8Array`, creates an Ed25519 private key for use with other methods in this package that accept `CryptoKey` objects.
+Given a private key represented as a 32-byte `Uint8Array`, creates an Ed25519 private key for use with other methods in this package that accept `CryptoKey` objects.
 
 ```ts
 import { createPrivateKeyFromBytes } from '@solana/keys';

@@ -5,13 +5,13 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/addresses/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/addresses/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/addresses/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/addresses?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/addresses?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/addresses
 
 # @solana/addresses
 
-This package contains utilities for generating account addresses. It can be used standalone, but it is also exported as part of the Solana JavaScript SDK [`@solana/web3.js@next`](https://github.com/anza-xyz/solana-web3.js/tree/main/packages/library).
+This package contains utilities for generating account addresses. It can be used standalone, but it is also exported as part of Kit [`@solana/kit`](https://github.com/anza-xyz/kit/tree/main/packages/kit).
 
 ## Types
 
@@ -150,7 +150,7 @@ Given a program's `Address` and up to 16 `Seeds`, this method will return the pr
 import { getAddressEncoder, getProgramDerivedAddress } from '@solana/addresses';
 
 const addressEncoder = getAddressEncoder();
-const { bumpSeed, pda } = await getProgramDerivedAddress({
+const [pda, bumpSeed] = await getProgramDerivedAddress({
     programAddress: 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL' as Address,
     seeds: [
         // Owner

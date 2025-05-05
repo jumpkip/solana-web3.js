@@ -5,13 +5,13 @@
 
 [code-style-prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [code-style-prettier-url]: https://github.com/prettier/prettier
-[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/transactions/next.svg?style=flat
-[npm-image]: https://img.shields.io/npm/v/@solana/transactions/next.svg?style=flat
-[npm-url]: https://www.npmjs.com/package/@solana/transactions/v/next
+[npm-downloads-image]: https://img.shields.io/npm/dm/@solana/transactions?style=flat
+[npm-image]: https://img.shields.io/npm/v/@solana/transactions?style=flat
+[npm-url]: https://www.npmjs.com/package/@solana/transactions
 
 # @solana/transactions
 
-This package contains types and functions for compiling, signing and sending transactions. It can be used standalone, but it is also exported as part of the Solana JavaScript SDK [`@solana/web3.js@next`](https://github.com/anza-xyz/solana-web3.js/tree/main/packages/library).
+This package contains types and functions for compiling, signing and sending transactions. It can be used standalone, but it is also exported as part of Kit [`@solana/kit`](https://github.com/anza-xyz/kit/tree/main/packages/kit).
 
 Transactions are created by compiling a transaction message. They must then be signed before being submitted to the network.
 
@@ -54,7 +54,7 @@ console.debug(`Inspect this transaction at https://explorer.solana.com/tx/${sign
 
 ### `signTransaction()`
 
-Given an array of `CryptoKey` objects which are private keys pertaining to addresses that are required to sign a transaction, this method will return a new signed transaction of type `FullySignedTransaction`. The transaction must have a signature for all required signers after being signed by the input `CryptoKey` objects.
+Given an array of `CryptoKey` objects which are private keys pertaining to addresses that are required to sign a transaction, this method will return a new signed transaction of type `FullySignedTransaction`. This function will throw unless the resulting transaction is fully signed.
 
 ```ts
 import { generateKeyPair } from '@solana/keys';
